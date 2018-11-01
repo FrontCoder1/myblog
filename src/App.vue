@@ -1,23 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <Header></Header>
     <router-view/>
+    <Footer></Footer>
   </div>
 </template>
-
 <script>
+import Header from 'Views/header/index.vue'
+import Footer from 'Views/footer/index.vue'
 export default {
+  components: {Header, Footer},
   name: 'App'
 }
 </script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import "./assets/css/reset.css";
 </style>
