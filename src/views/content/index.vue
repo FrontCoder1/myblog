@@ -1,6 +1,6 @@
 <template>
   <div class="content clearbox">
-    <new-blog class="w80 float-left"></new-blog>
+    <new-blog class="w80 float-left par20"></new-blog>
     <like-blog class="w20 float-right"></like-blog>
   </div>
 </template>
@@ -17,9 +17,6 @@ export default {
 <style lang="scss">
   .content{
     height: 200px;
-    :first-child{
-      padding-right: 20px;
-    }
     .w80{
       box-sizing: border-box;
       width: 80%;
