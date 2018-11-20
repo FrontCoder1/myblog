@@ -1,24 +1,39 @@
 <template>
   <div class="item clearbox">
     <div class="mt20"><span class="tag">{{tag.join('|')}}</span><span class="s"></span> <span class="itemTitle">{{itemTitle}}</span></div>
-    <p class="mt20 itemContent">{{itemContent}}</p>
+    <p class="mt20 itemContent">{{itemInfo}}</p>
     <div class="mt20 autor">
       <em>{{itemTime}}</em>
       <span>浏览量:（{{visitor}}）</span>
-      <a :href="itemUrl" class="float-right">查看全文>></a>
+      <a  class="float-right">查看全文>></a>
+      <a  class="float-right" v-show="isAdmin" @click=handleDelete(id)>删除</a>
+      <a  class="float-right" v-show="isAdmin">修改</a>
     </div>
   </div>
 </template>
 <script>
+import server from 'Config/server'
 export default {
   props: {
     message: {
       type: Object
-    }
+    },
+    isAdmin: {}
   },
   data () {
     return {
-      ...this.$props.message
+      ...this.$props.message,
+      id: this.$props.message._id
+    }
+  },
+  methods: {
+    handleDelete (id) {
+      this.$http.post(server['user/article/delete'], {id})
+        .then(res => {
+          if (res.data.code === 1) {
+            window.location.reload()
+          }
+        })
     }
   },
   mounted () {
@@ -55,6 +70,7 @@ export default {
       }
       a{
         color: #096;
+        margin-right: 5px;
       }
     }
   }

@@ -1,83 +1,26 @@
 <template>
   <div>
     <title-bar title="最新博客"></title-bar>
-    <blog-item v-for="(value, index) in article" :message="value" :key="index"></blog-item>
+    <blog-item v-for="(value, index) in article" :message="value" :key="index" :isAdmin="isAdmin"></blog-item>
   </div>
 </template>
 <script>
 import titleBar from 'Components/titleBar.vue'
 import blogItem from 'Components/blogItem/index.vue'
+import server from 'Config/server'
 export default {
   components: { titleBar, blogItem },
+  props: [ 'isAdmin' ],
   data () {
     return {
-      article: [{
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }, {
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }, {
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }, {
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }, {
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }]
+      article: []
     }
+  },
+  mounted () {
+    this.$http.get(server['visitor/article'])
+      .then(res => {
+        this.article = res.data.data
+      })
   }
 }
 </script>
