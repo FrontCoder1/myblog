@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    div{
+      height: 5000px;
+    }
+  </style>
+</head>
+<body>
+<div id="parent">
+  <div id="son1"></div>
+</div>
+</body>
+<script>
+
+  let par = document.getElementById('parent');
+  let so1 = document.getElementById('son1');
+  console.log(par.contains(son1))
+
+  // debounce函数用来包裹我们的事件处理方法
+  function debounce(fn, delay){
+    let last
+    // 持久化一个定时器
+    console.log(1)
+    let timer = null
+    delay||(delay=250)
+    // 闭包函数可以访问timer
+    return function(){
+      // 通过 this 和 arguments 获得函数的作用域和参数
+      let context = this
+      let args = arguments
+      let now = +new Date();
+
+      if(last&&now<last+delay){
+        clearTimeout(timer)
+        timer = setTimeout(function() {
+          fn.apply(context, args)
+        }, delay)
+      }else {
+        last = now;
+        fn.apply(context,args)
+      }
+
+      //console.log(context)
+      // 如果事件被触发，清除timer并重新开始计时
+
+    }
+  }
+
+  function foo(){
+    console.log('You are scrolling!')
+  }
+
+  document.addEventListener('scroll', debounce(foo, 1000));
+</script>
+</html>

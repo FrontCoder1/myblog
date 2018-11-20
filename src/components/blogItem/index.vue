@@ -1,13 +1,13 @@
 <template>
   <div class="item clearbox">
     <div class="mt20"><span class="tag">{{tag.join('|')}}</span><span class="s"></span> <span class="itemTitle">{{itemTitle}}</span></div>
-    <p class="mt20 itemContent">{{itemInfo}}</p>
+    <p class="mt20 itemContent" v-html="itemInfo"></p>
     <div class="mt20 autor">
       <em>{{itemTime}}</em>
       <span>浏览量:（{{visitor}}）</span>
       <a  class="float-right">查看全文>></a>
       <a  class="float-right" v-show="isAdmin" @click=handleDelete(id)>删除</a>
-      <a  class="float-right" v-show="isAdmin">修改</a>
+      <router-link to="/admin/edit" class="float-right" v-show="isAdmin">修改</router-link>
     </div>
   </div>
 </template>

@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Layout from 'Views/layout/index.vue'
 import AboutMe from 'Views/content/aboutMe/index.vue'
 import Admin from 'Views/content/admin/index.vue'
+import Edit from 'Components/edit'
 
 Vue.use(Router)
 
@@ -24,6 +25,10 @@ export default new Router({
     {
       path: '/admin',
       component: Admin
+    },
+    {
+      path: '/admin/edit',
+      component: Edit
     }
   ]
 })
