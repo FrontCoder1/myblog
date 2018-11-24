@@ -1,65 +1,45 @@
 <template>
   <div class="likeItem">
-    <h3 v-for="(value, index) in article" :key="index"><a :href="value.itemUrl">
-      {{index+1}}.{{value.itemTitle}}
-    </a></h3>
+    <h3 v-for="(value, index) in article" :key="index">
+      <router-link :to= "'article/detail/'+ value._id">
+        {{index+1}}.{{value.itemTitle}}
+      </router-link>
+    </h3>
   </div>
 </template>
 <script>
+import server from 'Config/server'
 export default {
   data () {
     return {
-      article: [{
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }, {
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点askjdf',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }, {
-        tag: ['js', 'css'],
-        itemTitle: 'js相关的一些知识点asdjflkasjdflkjasdlkfj',
-        itemContent: '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n' +
-        '      \'我曾经是一张白纸，师长教我在上面写写画画，于是我有了自己的风格\',\n',
-        itemUrl: 'jfklasjlkf/sjadkfj/sadjkf',
-        itemTime: '2018年11月1号',
-        visitor: 20
-      }]
+      article: {},
+      link: '`article/detail/'
     }
+  },
+  created () {
+    this.$http.get(server['visitor/article/like'])
+      .then(res => {
+        if (res.data.code === 1) {
+          this.article = res.data.data
+        }
+      })
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .likeItem{
     h3{
       margin-top: 20px;
       white-space: nowrap;
-      overflow: hidden;
+      //overflow: hidden;
+      padding-left: 10px;
       text-overflow: ellipsis;
+      a{
+        line-height: 20px;
+        &:hover{
+          color: #00A7EB;
+        }
+      }
     }
   }
 </style>

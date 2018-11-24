@@ -38,19 +38,23 @@ module.exports = {
       '@': resolve('src'),
       Views: resolve('src/views'),
       Config: resolve('src/config'),
-      Components: resolve('src/components')
-    }
+      Components: resolve('src/components'),
+      Store: resolve('src/store'),
+      Router: resolve('src/router')
+    },
   },
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
+        exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
       {
         test: /\.js$/,
+        exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },

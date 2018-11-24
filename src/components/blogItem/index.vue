@@ -5,9 +5,9 @@
     <div class="mt20 autor">
       <em>{{itemTime}}</em>
       <span>浏览量:（{{visitor}}）</span>
-      <a  class="float-right">查看全文>></a>
+      <router-link :to= linkDetail class="float-right">查看全文>></router-link>
       <a  class="float-right" v-show="isAdmin" @click=handleDelete(id)>删除</a>
-      <router-link to="/admin/edit" class="float-right" v-show="isAdmin">修改</router-link>
+      <router-link :to=linkEdit class="float-right" v-show="isAdmin">修改</router-link>
     </div>
   </div>
 </template>
@@ -23,7 +23,9 @@ export default {
   data () {
     return {
       ...this.$props.message,
-      id: this.$props.message._id
+      id: this.$props.message._id,
+      linkDetail: `/article/detail/${this.$props.message._id}`,
+      linkEdit: `/admin/edit?id=${this.$props.message._id}`
     }
   },
   methods: {

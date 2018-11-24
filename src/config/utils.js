@@ -29,5 +29,17 @@ export default {
         fn.apply(context, args)
       }, 300)
     }
+  },
+  setStorage (query) {
+    const storage = window.localStorage
+    for (let key in query) {
+      storage[key] = query[key]
+    }
+  },
+  getStorage (key) {
+    return window.localStorage.getItem(key)
+  },
+  removeItem (query) {
+    window.localStorage.removeItem(query)
   }
 }

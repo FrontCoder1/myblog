@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="clearbox">
     <title-bar title="阅读排行"></title-bar>
     <like-item></like-item>
   </div>

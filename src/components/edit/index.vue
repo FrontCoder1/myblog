@@ -14,10 +14,10 @@
         文章标签：
       </p>
       <div class="itemTag" ref="itemTag">
-        <input type="checkbox" value="html" name="itemTag">html
-        <input type="checkbox" value="css" name="itemTag">css
-        <input type="checkbox" value="js" name="itemTag">js
-        <input type="checkbox" value="其他" name="itemTag">其他
+        <input type="checkbox" value="html" v-model="tag" name="itemTag">html
+        <input type="checkbox" value="css" v-model="tag" name="itemTag">css
+        <input type="checkbox" value="js" v-model="tag" name="itemTag">js
+        <input type="checkbox" value="其他" v-model="tag" name="itemTag">其他
       </div>
       <button class="btn" ref="btn" @click.prevent="handleSubmit">提交</button>
     </form>
@@ -25,20 +25,27 @@
 </template>
 <script>
 import {quillEditor, Quill} from 'vue-quill-editor'
+import { ImageDrop } from 'quill-image-drop-module'
 import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
+import ImageResize from 'quill-image-resize-module'
 import utils from 'Config/utils'
 import server from 'Config/server'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 Quill.register('modules/ImageExtend', ImageExtend)
+Quill.register('modules/imageDrop', ImageDrop)
+Quill.register('modules/imageResize', ImageResize)
+
 export default {
   data () {
     return {
       itemContent: '',
       itemTitle: '',
+      tag: [],
       editorOption: {
         modules: {
+          imageDrop: true,
           ImageExtend: {
             loading: true,
             name: 'file',
@@ -55,7 +62,8 @@ export default {
                 QuillWatch.emit(this.quill.id)
               }
             }
-          }
+          },
+          imageResize: true
         },
         placeholder: '请输入文章内容'
       }
@@ -63,26 +71,22 @@ export default {
   },
   methods: {
     handleSubmit () {
-      let tagArray = []
-      let obj = {itemTitle: this.itemTitle, itemContent: this.itemContent}
-      let tags = Array.prototype.slice.call(this.$refs.itemTag.children)
-      tags.map(tag => {
-        if (tag.checked) {
-          tagArray.push(tag.value)
-        }
-      })
-      obj.tag = tagArray
-      this.$http.post(server['user/article/add'], obj)
+      let obj = {itemTitle: this.itemTitle, itemContent: this.itemContent, tag: this.tag}
+      let url = server['user/article/add']
+      if (this.href.indexOf('?') !== -1) {
+        url = `${server['user/article/update']}?id=${this.id}`
+      }
+      this.$http.post(url, obj)
         .then(res => {
           if (res.data.code === 1) {
             this.itemContent = ''
             this.itemTitle = ''
             this.$refs.from.reset()
+            location.href = '#/article/success'
           } else {
-            alert('文章增加失败了')
+            alert('文章增加/修改失败了')
           }
         })
-      console.log('submit', tagArray)
     },
     ...utils
   },
@@ -95,6 +99,24 @@ export default {
     quillEditor
   },
   mounted () {
+  },
+  created () {
+    this.href = location.href
+    if (this.href.indexOf('?') !== -1) {
+      let query = location.href.split('?')[1]
+      let id = query.split('=')[1]
+      this.id = id
+      console.log(id)
+      this.$http.get(`${server['visitor/article/detail']}?id=${id}`)
+        .then(res => {
+          if (res.data.code === 1) {
+            const response = res.data.data
+            for (let key in response) {
+              this[key] = response[key]
+            }
+          }
+        })
+    }
   }
 }
 </script>

@@ -106,13 +106,13 @@ body {
 .router-link-exact-active{
   color: #00A7EB !important;
 }
-.clearbox:after{
-  content: '';
+.clearbox:after,.clearbox:after{
+  content: "020";
   display: block;
-  width: 100%;
   height: 0;
   clear: both;
+  visibility: hidden;
 }
-par20{
+.par20{
   padding-right: 20px;
 }
